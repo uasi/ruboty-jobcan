@@ -3,7 +3,10 @@
 ```
 ruboty remember my jobcan code <code>
 ruboty remember my jobcan group id <group_id>
+
 ruboty punch the clock
+ruboty punch in
+ruboty punch out
 ```
 
 ## Installation
@@ -29,5 +32,5 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/ruboty-jobcan.
+Bug reports and pull requests are welcome on GitHub at https://github.com/uasi/ruboty-jobcan.
 
