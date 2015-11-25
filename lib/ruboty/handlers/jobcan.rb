@@ -19,6 +19,18 @@ module Ruboty
         name: "punch_clock",
       )
 
+      on(
+        /clock in\z/,
+        description: "Clock in on JOBCAN",
+        name: "clock_in",
+      )
+
+      on(
+        /clock out\z/,
+        description: "Clock out on JOBCAN",
+        name: "clock_out",
+      )
+
       def remember_code(message)
         Ruboty::Actions::Jobcan.new(message).remember_code
       end
@@ -29,6 +41,14 @@ module Ruboty
 
       def punch_clock(message)
         Ruboty::Actions::Jobcan.new(message).punch_clock
+      end
+
+      def clock_in(message)
+        Ruboty::Actions::Jobcan.new(message).clock_in
+      end
+
+      def clock_out(message)
+        Ruboty::Actions::Jobcan.new(message).clock_out
       end
     end
   end

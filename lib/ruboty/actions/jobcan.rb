@@ -22,7 +22,7 @@ module Ruboty
         message.reply("I remember.")
       end
 
-      def punch_clock
+      def punch_clock(in_out = :auto)
         unless (code = user_data["code"])
           message.reply("I don't know your JOBCAN code.")
           return
@@ -31,12 +31,20 @@ module Ruboty
           message.reply("I don't know your JOBCAN group ID.")
           return
         end
-        client = JobcanClient.new(code, group_id)
+        client = JobcanClient.new(code, group_id, in_out)
         client.authenticate!
         status = client.punch_clock!
         message.reply("OK, your current status is #{status}.")
       rescue
         message.reply("Error: #{$!}")
+      end
+
+      def clock_in
+        punch_clock(:in)
+      end
+
+      def clock_out
+        punch_clock(:out)
       end
 
       private
@@ -47,9 +55,10 @@ module Ruboty
       end
 
       class JobcanClient
-        def initialize(code, group_id)
+        def initialize(code, group_id, in_out)
           @code = code
           @group_id = group_id
+          @in_out = in_out
         end
 
         def authenticate!
@@ -96,7 +105,15 @@ module Ruboty
         end
 
         def punch_clock_request_body
-          { is_yakin: "0", adit_item: "DEF", adit_group_id: @group_id, notice: "" }
+          { is_yakin: "0", adit_item: adit_item, adit_group_id: @group_id, notice: "" }
+        end
+
+        def adit_item
+          case @in_out
+          when :auto then "DEF"
+          when :in then "work_start"
+          when :out then "work_end"
+          end
         end
       end
     end
