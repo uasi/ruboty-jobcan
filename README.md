@@ -1,13 +1,26 @@
 # Ruboty::Jobcan
 
+## Usage
+
 ```
+# Set up
 ruboty remember my jobcan code <code>
 ruboty remember my jobcan group id <group_id>
 
+# Clock in/out
 ruboty punch the clock
 ruboty punch in
 ruboty punch out
 ```
+
+`<code>` is the text attached to your mobile login URL,
+e.g. `http://jobcan.jp/m?code=YOUR_CODE_GOES_HERE`.
+Check out the invitation mail from JOBCAN for the URL.
+
+`<group_id>` is the numeric ID of your group;
+ask your manager or check out the source code of https://ssl.jobcan.jp/employee for it.
+
+![group ID](img/group_id.png)
 
 ## Installation
 
