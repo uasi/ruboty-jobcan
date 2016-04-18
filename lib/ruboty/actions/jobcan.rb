@@ -24,9 +24,11 @@ module Ruboty
       end
 
       def punch_clock(in_out = :auto)
-        unless (code = user_data["code"])
+        if !present_login_env? && !(code = user_data["code"])
           message.reply("I don't know your JOBCAN code.")
           return
+        else
+          code = nil
         end
         unless (group_id = user_data["group_id"])
           message.reply("I don't know your JOBCAN group ID.")
