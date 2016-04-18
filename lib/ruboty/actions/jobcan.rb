@@ -33,7 +33,7 @@ module Ruboty
           return
         end
         client = JobcanClient.new(code, group_id, in_out)
-        client.authenticate!
+        client.authenticate!(post: present_login_env?)
         status = client.punch_clock!
         message.reply("OK, your current status is #{status}.")
       rescue
@@ -70,9 +70,14 @@ module Ruboty
           @in_out = in_out
         end
 
-        def authenticate!
-          response = faraday.get(authenticate_url)
-          unless response.status == 200
+        def authenticate!(post: false)
+          response = if post
+                       faraday.post(authenticate_url(with_code: false),
+                                    authenticate_request_body)
+                     else
+                       faraday.get(authenticate_url)
+                     end
+          if !post && response.status != 200
             fail "could not log in to JOBCAN; it returned #{response.status}"
           end
         end
@@ -105,8 +110,22 @@ module Ruboty
           end
         end
 
-        def authenticate_url
-          "https://ssl.jobcan.jp/employee?code=#{@code}"
+        def authenticate_url(with_code: true)
+          if with_code
+            "https://ssl.jobcan.jp/employee?code=#{@code}"
+          else
+             "https://ssl.jobcan.jp/login/pc-employee/try"
+          end
+        end
+
+        def authenticate_request_body
+          {
+            client_id:   ENV["RUBOTY_JOBCAN_CLIENT_ID"],
+            email:       ENV["RUBOTY_JOBCAN_EMAIL"],
+            password:    ENV["RUBOTY_JOBCAN_PASSWORD"],
+            url:         "/employee",
+            login_type:  "1",
+          }
         end
 
         def punch_clock_url
