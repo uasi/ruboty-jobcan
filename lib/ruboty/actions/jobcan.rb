@@ -55,6 +55,14 @@ module Ruboty
         brain_space[message.from_name] ||= {}
       end
 
+      def present_login_env?
+        !(
+          ENV["RUBOTY_JOBCAN_CLIENT_ID"].nil? &&
+          ENV["RUBOTY_JOBCAN_EMAIL"].nil?     &&
+          ENV["RUBOTY_JOBCAN_PASSWORD"].nil?
+        )
+      end
+
       class JobcanClient
         def initialize(code, group_id, in_out)
           @code = code
