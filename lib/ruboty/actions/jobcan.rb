@@ -23,6 +23,11 @@ module Ruboty
         message.reply("I remember.")
       end
 
+      def register_group_alias
+        user_data["alias_#{message[:group_name]}"] = message[:group_id]
+        message.reply("I registered alias #{message[:group_name]} to ID #{message[:group_id]}.")
+      end
+
       def punch_clock(in_out = :auto)
         if !present_login_env? && !(code = user_data["code"])
           message.reply("I don't know your JOBCAN code.")

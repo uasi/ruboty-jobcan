@@ -14,6 +14,12 @@ module Ruboty
       )
 
       on(
+        /register my jobcan group alias (?<group_name>.+?) -> (?<group_id>\d+)\z/,
+        description: "Create alias to JOBCAN group ID",
+        name: "register_group_alias",
+      )
+
+      on(
         /punch the clock\z/,
         description: "Punch the clock on JOBCAN",
         name: "punch_clock",
@@ -37,6 +43,10 @@ module Ruboty
 
       def remember_group_id(message)
         Ruboty::Actions::Jobcan.new(message).remember_group_id
+      end
+
+      def register_group_alias(message)
+        Ruboty::Actions::Jobcan.new(message).register_group_alias
       end
 
       def punch_clock(message)
