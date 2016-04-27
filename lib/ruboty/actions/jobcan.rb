@@ -55,6 +55,10 @@ module Ruboty
         punch_clock(:out)
       end
 
+      def cannot_find_alias_message(group_name)
+        message.reply("I don't know your JOBCAN group alias '#{group_name}'.")
+      end
+
       private
 
       def user_data
@@ -68,6 +72,10 @@ module Ruboty
           ENV["RUBOTY_JOBCAN_EMAIL"].nil?     &&
           ENV["RUBOTY_JOBCAN_PASSWORD"].nil?
         )
+      end
+
+      def exist_group_alias?(group_name)
+        !!user_data["alias_#{group_name}"]
       end
 
       class JobcanClient
