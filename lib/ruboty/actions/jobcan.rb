@@ -52,12 +52,36 @@ module Ruboty
         message.reply("Error: #{$!}")
       end
 
+      def punch_clock_at
+        unless exist_group_alias?(message[:group_name])
+          cannot_find_alias_message(message[:group_name])
+          return
+        end
+        punch_clock(:auto, at: message[:group_name])
+      end
+
       def clock_in
         punch_clock(:in)
       end
 
+      def clock_in_at
+        unless exist_group_alias?(message[:group_name])
+          cannot_find_alias_message(message[:group_name])
+          return
+        end
+        punch_clock(:in, at: message[:group_name])
+      end
+
       def clock_out
         punch_clock(:out)
+      end
+
+      def clock_out_at
+        unless exist_group_alias?(message[:group_name])
+          cannot_find_alias_message(message[:group_name])
+          return
+        end
+        punch_clock(:out, at: message[:group_name])
       end
 
       def cannot_find_alias_message(group_name)
