@@ -28,17 +28,22 @@ module Ruboty
         message.reply("I registered alias #{message[:group_name]} to ID #{message[:group_id]}.")
       end
 
-      def punch_clock(in_out = :auto)
+      def punch_clock(in_out = :auto, at: nil)
         if !present_login_env? && !(code = user_data["code"])
           message.reply("I don't know your JOBCAN code.")
           return
         else
           code = nil
         end
-        unless (group_id = user_data["group_id"])
-          message.reply("I don't know your JOBCAN group ID.")
-          return
-        end
+
+        group_id = if at
+                     user_data["alias_#{at}"]
+                   elsif !user_data["group_id"].nil?
+                     user_data["group_id"]
+                   else
+                     message.reply("I don't know your JOBCAN group ID.")
+                   end
+
         client = JobcanClient.new(code, group_id, in_out)
         client.authenticate!(post: present_login_env?)
         status = client.punch_clock!
