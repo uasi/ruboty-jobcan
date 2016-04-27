@@ -26,15 +26,33 @@ module Ruboty
       )
 
       on(
+        /punch the clock at (?<group_name>.+)\z/,
+        description: "Punch the clock on JOBCAN with gourp alias",
+        name: "punch_clock_at",
+      )
+
+      on(
         /clock in\z/,
         description: "Clock in on JOBCAN",
         name: "clock_in",
       )
 
       on(
+        /clock in at (?<group_name>.+)\z/,
+        description: "Clock in on JOBCAN with gourp alias",
+        name: "clock_in_at",
+      )
+
+      on(
         /clock out\z/,
         description: "Clock out on JOBCAN",
         name: "clock_out",
+      )
+
+      on(
+        /clock out at (?<group_name>.+)\z/,
+        description: "Clock out on JOBCAN with gourp alias",
+        name: "clock_out_at",
       )
 
       def remember_code(message)
@@ -53,12 +71,24 @@ module Ruboty
         Ruboty::Actions::Jobcan.new(message).punch_clock
       end
 
+      def punch_clock_at(message)
+        Ruboty::Actions::Jobcan.new(message).punch_clock_at
+      end
+
       def clock_in(message)
         Ruboty::Actions::Jobcan.new(message).clock_in
       end
 
+      def clock_in_at(message)
+        Ruboty::Actions::Jobcan.new(message).clock_in_at
+      end
+
       def clock_out(message)
         Ruboty::Actions::Jobcan.new(message).clock_out
+      end
+
+      def clock_out_at(message)
+        Ruboty::Actions::Jobcan.new(message).clock_out_at
       end
     end
   end
