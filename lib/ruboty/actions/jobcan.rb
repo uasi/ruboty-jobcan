@@ -35,17 +35,14 @@ module Ruboty
         end
 
         group_id = if at
-                     user_data["alias_#{at}"]
+                     user_data["alias_#{at}"] or
+                       return cannot_find_alias_message(at)
                    elsif !user_data["group_id"].nil?
                      user_data["group_id"]
                    else
-                     nil
+                     user_data["group_id"] or
+                       return message.reply("I don't know your JOBCAN group ID.")
                    end
-
-        unless group_id
-          message.reply("I don't know your JOBCAN group ID.")
-          return
-        end
 
         client = JobcanClient.new(code, group_id, in_out)
         client.authenticate!(post: present_login_env?)
@@ -56,10 +53,6 @@ module Ruboty
       end
 
       def punch_clock_at
-        unless exist_group_alias?(message[:group_name])
-          cannot_find_alias_message(message[:group_name])
-          return
-        end
         punch_clock(:auto, at: message[:group_name])
       end
 
