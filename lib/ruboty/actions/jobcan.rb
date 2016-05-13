@@ -29,7 +29,7 @@ module Ruboty
       end
 
       def punch_clock(in_out = :auto, at: nil)
-        unless (code = user_data["code"]) || present_login_env?
+        unless (code = user_data["code"]) || login_env_present?
           message.reply("I don't know your JOBCAN code.")
           return
         end
@@ -45,7 +45,7 @@ module Ruboty
                    end
 
         client = JobcanClient.new(code, group_id, in_out)
-        client.authenticate!(post: present_login_env?)
+        client.authenticate!(post: login_env_present?)
         status = client.punch_clock!
         message.reply("OK, your current status is #{status}.")
       rescue
@@ -91,11 +91,11 @@ module Ruboty
         brain_space[message.from_name] ||= {}
       end
 
-      def present_login_env?
-        !(
-          ENV["RUBOTY_JOBCAN_CLIENT_ID"].nil? &&
-          ENV["RUBOTY_JOBCAN_EMAIL"].nil?     &&
-          ENV["RUBOTY_JOBCAN_PASSWORD"].nil?
+      def login_env_present?
+        !!(
+          ENV["RUBOTY_JOBCAN_CLIENT_ID"] &&
+          ENV["RUBOTY_JOBCAN_EMAIL"]     &&
+          ENV["RUBOTY_JOBCAN_PASSWORD"]
         )
       end
 
