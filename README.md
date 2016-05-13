@@ -40,6 +40,7 @@ ask your manager or check out the source code of https://ssl.jobcan.jp/employee 
 ![group ID](img/group_id.png)
 
 If you want to use different group id, you can use that.
+
 ```
 # register group id alias
 ruboty register my jobcan group alias <group_name> -> <group_id>

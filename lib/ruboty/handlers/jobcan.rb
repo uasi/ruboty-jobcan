@@ -27,7 +27,7 @@ module Ruboty
 
       on(
         /punch the clock at (?<group_name>.+)\z/,
-        description: "Punch the clock on JOBCAN with gourp alias",
+        description: "Punch the clock on JOBCAN with group alias",
         name: "punch_clock_at",
       )
 
@@ -39,7 +39,7 @@ module Ruboty
 
       on(
         /clock in at (?<group_name>.+)\z/,
-        description: "Clock in on JOBCAN with gourp alias",
+        description: "Clock in on JOBCAN with group alias",
         name: "clock_in_at",
       )
 
@@ -51,7 +51,7 @@ module Ruboty
 
       on(
         /clock out at (?<group_name>.+)\z/,
-        description: "Clock out on JOBCAN with gourp alias",
+        description: "Clock out on JOBCAN with group alias",
         name: "clock_out_at",
       )
 
