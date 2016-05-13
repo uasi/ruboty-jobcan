@@ -39,8 +39,13 @@ module Ruboty
                    elsif !user_data["group_id"].nil?
                      user_data["group_id"]
                    else
-                     message.reply("I don't know your JOBCAN group ID.")
+                     nil
                    end
+
+        unless group_id
+          message.reply("I don't know your JOBCAN group ID.")
+          return
+        end
 
         client = JobcanClient.new(code, group_id, in_out)
         client.authenticate!(post: present_login_env?)
