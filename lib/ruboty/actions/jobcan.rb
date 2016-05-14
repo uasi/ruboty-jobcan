@@ -37,8 +37,6 @@ module Ruboty
         group_id = if at
                      user_data["alias_#{at}"] or
                        return cannot_find_alias_message(at)
-                   elsif !user_data["group_id"].nil?
-                     user_data["group_id"]
                    else
                      user_data["group_id"] or
                        return message.reply("I don't know your JOBCAN group ID.")
