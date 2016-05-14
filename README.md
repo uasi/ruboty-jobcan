@@ -1,7 +1,9 @@
 # Ruboty::Jobcan
 
 ## Usage
+
 ### When you have the code
+
 `<code>` is the text attached to your mobile login URL,
 e.g. `http://jobcan.jp/m?code=YOUR_CODE_GOES_HERE`.
 Check out the invitation mail from JOBCAN for the URL.
@@ -13,6 +15,7 @@ ruboty remember my jobcan group id <group_id>
 ```
 
 ### When you have client id, email and password
+
 First, you should set env.
 
 ```
@@ -22,6 +25,7 @@ RUBOTY_JOBCAN_PASSWORD
 ```
 
 And, set your default group id.
+
 ```
 # Set up
 ruboty remember my jobcan group id <group_id>
@@ -51,9 +55,7 @@ ruboty punch in at <group_name>
 ruboty punch out at <group_name>
 ```
 
-
 ## Installation
-
 
 ```ruby
 gem 'ruboty-jobcan'
