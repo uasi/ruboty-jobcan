@@ -118,6 +118,10 @@ module Ruboty
           if !post && response.status != 200
             fail "could not log in to JOBCAN; it returned #{response.status}"
           end
+          @token = response.body[/<input type="hidden" class="token" name="token" value="([^"]+)">/, 1]
+          if !@token
+            fail "could not fetch token"
+          end
         end
 
         def punch_clock!
@@ -171,7 +175,7 @@ module Ruboty
         end
 
         def punch_clock_request_body
-          { is_yakin: "0", adit_item: adit_item, adit_group_id: @group_id, notice: "" }
+          { is_yakin: "0", adit_item: adit_item, adit_group_id: @group_id, notice: "", token: @token }
         end
 
         def adit_item
