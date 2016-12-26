@@ -125,7 +125,7 @@ module Ruboty
           unless response.status == 200
             fail "could not punch the clock on JOBCAN; it returned #{response.status}"
           end
-          result = JSON.parse(response.body) or fail "could not parse response"
+          result = JSON.parse(response.body) rescue fail("could not parse response")
           if result["result"] == 0
             if result["errors"] && result["errors"]["aditCount"] == "duplicate"
               fail "you have punched the clock within a minute"
