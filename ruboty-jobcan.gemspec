@@ -24,4 +24,5 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency "faraday", "~> 0.9.0"
   spec.add_runtime_dependency "faraday_middleware", "~> 0.10.0"
   spec.add_runtime_dependency "faraday-cookie_jar", "~> 0.0.6"
+  spec.add_runtime_dependency "jbcn", "~> 0.1.0"
 end
