@@ -1,3 +1,4 @@
+require "date"
 require "faraday"
 require "faraday_middleware"
 require "faraday-cookie_jar"
@@ -47,7 +48,10 @@ module Ruboty
           end
         end
 
-        result = client.clock(message[:in_out].to_sym, group_id: group_id)
+        in_out = message[:in_out].to_sym
+        night_shift = in_out == :out && night_shift_time?
+        result = client.clock(message[:in_out].to_sym, group_id: group_id, night_shift: night_shift)
+
         unless result.is_a?(Hash) && (current_status = result["current_status"])
           message.reply("I got unknown response from JOBCAN: #{result}.")
           return
@@ -100,6 +104,11 @@ module Ruboty
           ENV["RUBOTY_JOBCAN_PASSWORD"] &&
           (ENV["RUBOTY_JOBCAN_USERNAME"] || ENV["RUBOTY_JOBCAN_EMAIL"])
         )
+      end
+
+      # True if current time is between 0:00 AM adn 5:59 AM.
+      def night_shift_time?
+        (0..5).include?(DateTime.now.hour)
       end
     end
   end
